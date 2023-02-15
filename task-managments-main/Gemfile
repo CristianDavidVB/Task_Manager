@@ -79,3 +79,5 @@ group :development do
   #Use for preview emails
   gem "letter_opener"
 end
+
+gem "ruby-lsp", "~> 0.3.8", :group => :development

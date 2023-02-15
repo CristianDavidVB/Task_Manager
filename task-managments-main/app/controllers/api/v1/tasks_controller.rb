@@ -16,6 +16,7 @@ module Api
       def create
         @task = Task.new(task_params)
         if @task.save
+          TasksEmployeeMailer.with(task: @task).task_employee.deliver_later
           render json: serializer(@task), status: :created
         else
           render json: @task.errors, status: :unprocessable_entity
