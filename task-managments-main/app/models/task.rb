@@ -6,4 +6,6 @@ class Task < ApplicationRecord
   has_many :employees, through: :task_assignments
 
   validates :title, :start_date, :end_date, presence: true
+  accepts_nested_attributes_for :task_assignments, allow_destroy: true
+
 end

@@ -6,8 +6,8 @@ RSpec.describe "Employees Request", type: :request do
   let!(:employees) { create_list(:employee, 3) }
   let(:employee_id) { employees.first.id }
 
-  describe "GET /employees" do
-    before { get '/employees', headers: headers }
+  describe "GET /api/v1/employees" do
+    before { get '/api/v1/employees', headers: headers }
     it "returns all employees" do
       expect(response_body.size).to eq(3)
     end
@@ -18,7 +18,7 @@ RSpec.describe "Employees Request", type: :request do
   end
 
   describe "GET /employees/:id" do
-    before  { get "/employees/#{employee_id}", headers: headers }
+    before  { get "/api/v1/employees/#{employee_id}", headers: headers }
 
     context "When the employee exist" do
       it "return the id" do

@@ -1,6 +1,8 @@
 class TasksEmployeeMailer < ApplicationMailer
-  def task_employee(employee, compàny)
+  def task_employee
+    binding.break
     @employee = employee
-    @co
+    @task = task
+    mail(to: employee.email, subject: "New task assigned")
   end
 end
