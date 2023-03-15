@@ -14,12 +14,11 @@ module Api
 
       def create
         @task = Task.new(task_params)
-        binding.break
         if @task.save
           @task.employees.each do |employee|
             TasksEmployeeMailer
-            .with(employee: employee)
-            .task_created
+            .with(employee: employee, task: @task)
+            .task_created(employee, @task)
             .deliver_later
           end
 

@@ -53,7 +53,8 @@ module Api
           :last_name,
           :document,
           :mobile,
-          :salary
+          :salary,
+          :user_id
         )
       end
 

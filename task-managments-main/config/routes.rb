@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  post "/auth/login", to: "authentication#authenticate"
   namespace :api do
     namespace :v1 do
       resources :tasks do
@@ -17,7 +18,6 @@ Rails.application.routes.draw do
               collection { put "/:id/update_enabled", to: "employees#update_enabled" }
             end
             resources :users, only: %i[create]
-      post "/auth/login", to: "authentication#authenticate"
     end
   end
 end

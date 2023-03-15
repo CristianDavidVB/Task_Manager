@@ -4,7 +4,6 @@ module Api
       #GET all
       def index
         @tags = Tag.all
-        authorize
         render json: serializer(@tags)
       end
 
