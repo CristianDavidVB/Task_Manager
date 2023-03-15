@@ -15,7 +15,7 @@ RSpec.describe "Tasks request", type: :request do
     end
   end
 
-  describe "GET /tasks" do
+  describe "GET /api/v1/tasks" do
     before { get "/api/v1/tasks", headers: headers }
 
     it "return all tasks" do
@@ -27,7 +27,7 @@ RSpec.describe "Tasks request", type: :request do
     end
   end
 
-  describe "GET /tasks/:params" do
+  describe "GET /api/v1/tasks/:params" do
     let(:params) { tasks.first.title }
     before { get "/api/v1/tasks", params: { title: params }, headers: headers }
 
@@ -36,7 +36,7 @@ RSpec.describe "Tasks request", type: :request do
     end
   end
 
-  describe "GET /tasks/:id" do
+  describe "GET /api/v1/tasks/:id" do
     before { get "/api/v1/tasks/#{task_id}", headers: headers }
 
     context "When the task exist" do
@@ -59,7 +59,7 @@ RSpec.describe "Tasks request", type: :request do
     end
   end
 
-  describe "POST /tasks" do
+  describe "POST /api/v1/tasks" do
     let(:valid_attributes) { { title: "new task", start_date: Date.today, end_date: Date.today + 10.day, tag_id: tag.id }.to_json }
     before { post "/api/v1/tasks", params: valid_attributes, headers: headers }
 
@@ -71,7 +71,7 @@ RSpec.describe "Tasks request", type: :request do
     end
   end
 
-  describe "PUT /tasks/:id" do
+  describe "PUT /api/v1/tasks/:id" do
     let(:valid_attributes) { { title: "update task" }.to_json }
     before { put "/api/v1/tasks/#{task_id}", params: valid_attributes, headers: headers }
 
@@ -96,7 +96,7 @@ RSpec.describe "Tasks request", type: :request do
     end
   end
 
-  describe "PUT /tasks/:id/update_enabled" do
+  describe "PUT /api/v1/tasks/:id/update_enabled" do
     before { put "/api/v1/tasks/#{task_id}/update_enabled", headers: headers }
 
     context "When the task exist" do
@@ -119,12 +119,11 @@ RSpec.describe "Tasks request", type: :request do
     end
   end
 
-  describe "DELETE /tasks/:id" do
+  describe "DELETE /api/v1/tasks/:id" do
     before { delete "/api/v1/tasks/#{task_id}", headers: headers }
 
     it "return status code 204" do
       expect(response.status).to eq(204)
     end
   end
-
 end

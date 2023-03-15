@@ -1,10 +1,9 @@
 module Api
   module V1
     class TasksController < ApplicationController
-
       def index
         @tasks =
-        FindTasks.new.call(params).page(params[:page]).per(params[:per_page])
+          FindTasks.new.call(params).page(params[:page]).per(params[:per_page])
         authorize @tasks
         render json: serializer(@tasks)
       end
@@ -16,6 +15,13 @@ module Api
       def create
         @task = Task.new(task_params)
         if @task.save
+          @task.employees.each do |employee|
+            TasksEmployeeMailer
+            .with(employee: employee, task: @task)
+            .task_created(employee, @task)
+            .deliver_later
+          end
+
           render json: serializer(@task), status: :created
         else
           render json: @task.errors, status: :unprocessable_entity
@@ -31,9 +37,7 @@ module Api
       end
 
       def update_enabled
-        if task.update(status: !task.status)
-          render json: serializer(task)
-        end
+        render json: serializer(task) if task.update(status: !task.status)
       end
 
       def destroy
@@ -49,7 +53,9 @@ module Api
           :start_date,
           :end_date,
           :tag_id,
-          employees_attributes: [:id])
+          :enterprise_id,
+          task_assignments_attributes: %i[id employee_id _destroy]
+        )
       end
 
       def task

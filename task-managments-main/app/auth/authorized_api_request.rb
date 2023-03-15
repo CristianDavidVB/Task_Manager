@@ -12,6 +12,7 @@ class AuthorizedApiRequest
   attr_reader :headers
 
   def user
+    # binding.break
     @user ||= User.find(decode_auth_token[:user_id]) if decode_auth_token
 
     rescue ActiveRecord::RecordNotFound=> e

@@ -1,9 +1,11 @@
 class ApplicationPolicy
   attr_reader :user, :permissions, :record
 
-  def initialize(user,
+  def initialize(
+    user,
     permissions = user.roles.flat_map(&:permission_roles).map(&:permission),
-    record)
+    record
+  )
     @user = user
     @permissions = permissions
     @record = record
